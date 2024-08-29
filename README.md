@@ -1,34 +1,40 @@
 # React HLS Player
 
-![NPM Downloads](https://img.shields.io/npm/dm/react-hls-player?style=flat-square)
-[![All Contributors](https://img.shields.io/badge/all_contributors-2-orange.svg?style=flat-square)](#contributors-)
-![Libraries.io dependency status for latest release](https://img.shields.io/librariesio/release/npm/react-hls-player)
-![npm bundle size](https://img.shields.io/bundlephobia/min/react-hls-player)
+![NPM Downloads](https://img.shields.io/npm/dm/react-hls-video-player?style=flat-square)
+[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
+![Libraries.io dependency status for latest release](https://img.shields.io/librariesio/release/npm/react-hls-video-player)
+![npm bundle size](https://img.shields.io/bundlephobia/min/react-hls-video-player)
 
 ## Introduction
 
-`react-hls-player` is a simple HLS live stream player.
+`react-hls-video-player` is a simple HLS live stream player.
 It uses [hls.js](https://github.com/video-dev/hls.js) to play your hls live stream if your browser supports `html 5 video` and `MediaSource Extension`.
+
+## Install
+
+`yarn add react-hls-video-player`
+or
+`npm i react-hls-video-player`
 
 ## Examples
 
 ### Using the ReactHlsPlayer component
 
 ```javascript
-import React from 'react';
-import ReactDOM from 'react-dom';
-import ReactHlsPlayer from 'react-hls-player';
+import React from 'react'
+import ReactDOM from 'react-dom'
+import ReactHlsPlayer from 'react-hls-video-player'
 
 ReactDOM.render(
-  <ReactHlsPlayer
-    src="https://bitdash-a.akamaihd.net/content/sintel/hls/playlist.m3u8"
-    autoPlay={false}
-    controls={true}
-    width="100%"
-    height="auto"
-  />,
-  document.getElementById('app')
-);
+    <ReactHlsPlayer
+        src="https://bitdash-a.akamaihd.net/content/sintel/hls/playlist.m3u8"
+        autoPlay={false}
+        controls={true}
+        width="100%"
+        height="auto"
+    />,
+    document.getElementById('app'),
+)
 ```
 
 ### Using hlsConfig (advanced use case)
@@ -36,21 +42,21 @@ ReactDOM.render(
 All available config properties can be found on the [Fine Tuning](https://github.com/video-dev/hls.js/blob/master/docs/API.md#fine-tuning) section of the Hls.js API.md
 
 ```javascript
-import React from 'react';
-import ReactDOM from 'react-dom';
-import ReactHlsPlayer from 'react-hls-player';
+import React from 'react'
+import ReactDOM from 'react-dom'
+import ReactHlsPlayer from 'react-hls-video-player'
 
 ReactDOM.render(
-  <ReactHlsPlayer
-    src="https://bitdash-a.akamaihd.net/content/sintel/hls/playlist.m3u8"
-    hlsConfig={{
-      maxLoadingDelay: 4,
-      minAutoBitrate: 0,
-      lowLatencyMode: true,
-    }}
-  />,
-  document.getElementById('app')
-);
+    <ReactHlsPlayer
+        src="https://bitdash-a.akamaihd.net/content/sintel/hls/playlist.m3u8"
+        hlsConfig={{
+            maxLoadingDelay: 4,
+            minAutoBitrate: 0,
+            lowLatencyMode: true,
+        }}
+    />,
+    document.getElementById('app'),
+)
 ```
 
 ### Using playerRef
@@ -58,73 +64,73 @@ ReactDOM.render(
 The `playerRef` returns a ref to the underlying video component, and as such will give you access to all video component properties and methods.
 
 ```javascript
-import React from 'react';
-import ReactHlsPlayer from 'react-hls-player';
+import React from 'react'
+import ReactHlsPlayer from 'react-hls-video-player'
 
 function MyCustomComponent() {
-  const playerRef = React.useRef();
+    const playerRef = React.useRef()
 
-  function playVideo() {
-    playerRef.current.play();
-  }
+    function playVideo() {
+        playerRef.current.play()
+    }
 
-  function pauseVideo() {
-    playerRef.current.pause();
-  }
+    function pauseVideo() {
+        playerRef.current.pause()
+    }
 
-  function toggleControls() {
-    playerRef.current.controls = !playerRef.current.controls;
-  }
+    function toggleControls() {
+        playerRef.current.controls = !playerRef.current.controls
+    }
 
-  return (
-    <ReactHlsPlayer
-      playerRef={playerRef}
-      src="https://bitdash-a.akamaihd.net/content/sintel/hls/playlist.m3u8"
-    />
-  );
+    return (
+        <ReactHlsPlayer
+            playerRef={playerRef}
+            src="https://bitdash-a.akamaihd.net/content/sintel/hls/playlist.m3u8"
+        />
+    )
 }
 
-ReactDOM.render(<MyCustomComponent />, document.getElementById('app'));
+ReactDOM.render(<MyCustomComponent />, document.getElementById('app'))
 ```
 
 You can also listen to events of the video
 
 ```javascript
-import React from 'react';
-import ReactHlsPlayer from 'react-hls-player';
+import React from 'react'
+import ReactHlsPlayer from 'react-hls-video-player'
 
 function MyCustomComponent() {
-  const playerRef = React.useRef();
+    const playerRef = React.useRef()
 
-  React.useEffect(() => {
-    function fireOnVideoStart() {
-      // Do some stuff when the video starts/resumes playing
-    }
+    React.useEffect(() => {
+        function fireOnVideoStart() {
+            // Do some stuff when the video starts/resumes playing
+        }
 
-    playerRef.current.addEventListener('play', fireOnVideoStart);
+        playerRef.current.addEventListener('play', fireOnVideoStart)
 
-    return playerRef.current.removeEventListener('play', fireOnVideoStart);
-  }, []);
+        return playerRef.current.removeEventListener('play', fireOnVideoStart)
+    }, [])
 
-  React.useEffect(() => {
-    function fireOnVideoEnd() {
-      // Do some stuff when the video ends
-    }
+    React.useEffect(() => {
+        function fireOnVideoEnd() {
+            // Do some stuff when the video ends
+        }
 
-    playerRef.current.addEventListener('ended', fireOnVideoEnd);
+        playerRef.current.addEventListener('ended', fireOnVideoEnd)
 
-    return playerRef.current.removeEventListener('ended', fireOnVideoEnd);
-  }, []);
+        return playerRef.current.removeEventListener('ended', fireOnVideoEnd)
+    }, [])
 
-  return (
-    <ReactHlsPlayer
-      playerRef={playerRef}
-      src="https://bitdash-a.akamaihd.net/content/sintel/hls/playlist.m3u8"
-    />
-  );
+    return (
+        <ReactHlsPlayer
+            playerRef={playerRef}
+            src="https://bitdash-a.akamaihd.net/content/sintel/hls/playlist.m3u8"
+        />
+    )
 }
 
-ReactDOM.render(<MyCustomComponent />, document.getElementById('app'));
+ReactDOM.render(<MyCustomComponent />, document.getElementById('app'))
 ```
 
 ## Props

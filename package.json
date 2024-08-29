@@ -1,8 +1,7 @@
 {
     "name": "react-hls-video-player",
-    "version": "3.0.8",
+    "version": "3.0.9",
     "description": "A simple and easy to use react component for playing an hls live stream",
-    "main": "./dist/index.js",
     "main": "./dist/index.js",
     "types": "./dist",
     "scripts": {
@@ -20,7 +19,8 @@
         "hls",
         "rtmp",
         "react",
-        "component"
+        "component",
+        "video player"
     ],
     "author": "Colby Gilbert",
     "license": "MIT",
