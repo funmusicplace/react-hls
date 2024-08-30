@@ -1,84 +1,86 @@
 import React, { useEffect, RefObject } from 'react'
-import Hls from 'hls.js'
-import Config from 'hls.js'
+import Hls, { HlsConfig } from 'hls.js'
 
-declare const window: Window &
-    typeof globalThis & {
+declare global {
+    interface Window {
         Hls: typeof Hls
     }
+}
 
 export interface HlsPlayerProps extends React.VideoHTMLAttributes<HTMLVideoElement> {
-    hlsConfig?: Config
-    playerRef: RefObject<HTMLVideoElement>
-    getHLSRef?: (hlsObj: Hls) => void
+    hlsConfig?: HlsConfig
+    playerRef?: RefObject<HTMLVideoElement>
+    getHLSInstance?: (hls: Hls) => void
     src: string
 }
 
-function ReactHlsPlayer({
+const ReactHlsPlayer: React.FC<HlsPlayerProps> = ({
     hlsConfig,
-    playerRef = React.createRef<HTMLVideoElement>(),
-    getHLSRef,
+    playerRef,
+    getHLSInstance,
     src,
     autoPlay,
     ...props
-}: HlsPlayerProps) {
-    useEffect(() => {
-        let hls: Hls
+}) => {
+    const internalRef = playerRef || React.useRef<HTMLVideoElement>(null)
 
-        function _initPlayer() {
+    useEffect(() => {
+        let hls: Hls | null
+
+        function initPlayer() {
             if (hls != null) {
                 hls.destroy()
             }
-
-            window.Hls = Hls
 
             const newHls = new Hls({
                 enableWorker: false,
                 ...hlsConfig,
             })
 
-            if (playerRef.current != null) {
-                newHls.attachMedia(playerRef.current)
+            if (internalRef.current) {
+                newHls.attachMedia(internalRef.current)
             }
 
             newHls.on(Hls.Events.MEDIA_ATTACHED, () => {
                 newHls.loadSource(src)
-
-                newHls.on(Hls.Events.MANIFEST_PARSED, () => {
-                    if (autoPlay) {
-                        playerRef?.current
-                            ?.play()
-                            .catch(() =>
-                                console.log(
-                                    'Unable to autoplay prior to user interaction with the dom.',
-                                ),
-                            )
-                    }
-                })
             })
 
-            newHls.on(Hls.Events.ERROR, function (event, data) {
-                if (data.fatal) {
-                    switch (data.type) {
-                        case Hls.ErrorTypes.NETWORK_ERROR:
-                            newHls.startLoad()
-                            break
-                        case Hls.ErrorTypes.MEDIA_ERROR:
-                            newHls.recoverMediaError()
-                            break
-                        default:
-                            _initPlayer()
-                            break
-                    }
+            newHls.on(Hls.Events.MANIFEST_PARSED, () => {
+                if (!autoPlay) {
+                    return
+                }
+                internalRef?.current
+                    ?.play()
+                    .catch(() =>
+                        console.warn('Unable to autoplay prior to user interaction with the dom.'),
+                    )
+            })
+
+            newHls.on(Hls.Events.ERROR, (event, data) => {
+                if (!data.fatal) {
+                    return
+                }
+                console.warn(`HLS.js Error: ${data.type} - ${data.details}`)
+                switch (data.type) {
+                    case Hls.ErrorTypes.NETWORK_ERROR:
+                        newHls.startLoad()
+                        break
+                    case Hls.ErrorTypes.MEDIA_ERROR:
+                        newHls.recoverMediaError()
+                        break
+                    default:
+                        initPlayer()
+                        break
                 }
             })
 
             hls = newHls
         }
 
-        // Check for Media Source support
         if (Hls.isSupported()) {
-            _initPlayer()
+            initPlayer()
+        } else {
+            console.warn('HLS is not supported in this browser')
         }
 
         return () => {
@@ -86,13 +88,17 @@ function ReactHlsPlayer({
                 hls.destroy()
             }
         }
-    }, [autoPlay, hlsConfig, playerRef, getHLSRef, src])
+    }, [autoPlay, hlsConfig, playerRef, getHLSInstance, src])
 
-    // If Media Source is supported, use HLS.js to play video
-    if (Hls.isSupported()) return <video ref={playerRef} {...props} />
+    if (!Hls.isSupported()) {
+        return (
+            <video ref={internalRef} src={src} autoPlay={autoPlay} {...props}>
+                Your browser does not support the video tag.
+            </video>
+        )
+    }
 
-    // Fallback to using a regular video player if HLS is supported by default in the user's browser
-    return <video ref={playerRef} src={src} autoPlay={autoPlay} {...props} />
+    return <video ref={internalRef} {...props} />
 }
 
 export default ReactHlsPlayer
