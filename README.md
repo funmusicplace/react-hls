@@ -1,4 +1,4 @@
-# React HLS Player
+# React HLS Video Player
 
 ![NPM Downloads](https://img.shields.io/npm/dm/react-hls-video-player?style=flat-square)
 [![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
