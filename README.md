@@ -1,4 +1,4 @@
-# React HLS Player
+# React HLS Video Player
 
 ![NPM Downloads](https://img.shields.io/npm/dm/react-hls-video-player?style=flat-square)
 [![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
@@ -150,20 +150,6 @@ All [video properties](https://www.w3schools.com/tags/att_video_poster.asp) are 
 ### Additional Notes
 
 By default, the HLS config will have `enableWorker` set to `false`. There have been issues with the HLS.js library that breaks some React apps, so I've disabled it to prevent people from running in to this issue. If you want to enable it and see if it works with your React app, you can simply pass in `enableWorker: true` to the `hlsConfig` prop object. [See this issue for more information](https://github.com/video-dev/hls.js/issues/2064)
-
-## Contributors ✨
-
-Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
-
-<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
-<!-- prettier-ignore-start -->
-<!-- markdownlint-disable -->
-<table>
-  <tr>
-    <td align="center"><a href="https://www.marcochavez.info/"><img src="https://avatars0.githubusercontent.com/u/43889446?v=4" width="100px;" alt=""/><br /><sub><b>Marco Chavez</b></sub></a><br /><a href="https://github.com/devcshort/react-hls/commits?author=mxrcochxvez" title="Code">💻</a></td>
-    <td align="center"><a href="https://www.chrisrshort.com"><img src="https://avatars3.githubusercontent.com/u/13677134?v=4" width="100px;" alt=""/><br /><sub><b>Chris Short</b></sub></a><br /><a href="https://github.com/devcshort/react-hls/commits?author=devcshort" title="Code">💻</a> <a href="#projectManagement-devcshort" title="Project Management">📆</a></td>
-  </tr>
-</table>
 
 <!-- markdownlint-enable -->
 <!-- prettier-ignore-end -->
