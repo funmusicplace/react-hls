@@ -1,9 +1,10 @@
 import React, { useEffect, RefObject } from 'react'
-import Hls, { Config } from 'hls.js'
+import Hls from 'hls.js'
+import Config from 'hls.js'
 
 declare const window: Window &
     typeof globalThis & {
-        Hls: any
+        Hls: typeof Hls
     }
 
 export interface HlsPlayerProps extends React.VideoHTMLAttributes<HTMLVideoElement> {
