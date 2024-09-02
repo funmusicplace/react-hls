@@ -1,3 +1,4 @@
+'use client'
 import React, { useEffect, RefObject } from 'react'
 import Hls, { HlsConfig } from 'hls.js'
 
