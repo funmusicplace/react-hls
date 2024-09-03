@@ -137,15 +137,56 @@ ReactDOM.render(<MyCustomComponent />, document.getElementById('app'))
 
 All [video properties](https://www.w3schools.com/tags/att_video_poster.asp) are supported and passed down to the underlying video component
 
-| Prop                     | Description                                                                                                             |
-| ------------------------ | ----------------------------------------------------------------------------------------------------------------------- |
-| src `String`, `required` | The hls url that you want to play                                                                                       |
-| autoPlay `Boolean`       | Autoplay when component is ready. Defaults to `false`                                                                   |
-| controls `Boolean`       | Whether or not to show the playback controls. Defaults to `false`                                                       |
-| width `Number`           | Video width. Defaults to `100%`                                                                                         |
-| height `Number`          | Video height. Defaults to `auto`                                                                                        |
-| hlsConfig `Object`       | `hls.js` config, you can see all config [here](https://github.com/video-dev/hls.js/blob/master/docs/API.md#fine-tuning) |
-| playerRef `React Ref`    | Pass in your own ref to interact with the video player directly. This will override the default ref.                    |
+| Prop                        | Description                                                                                                             |
+| --------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
+| src `String`, `required`    | The hls url that you want to play                                                                                        |
+| playerRef `React Ref`       | Pass in your own ref to interact with the video player directly. This will override the default ref.                     |
+| hlsConfig `Object`          | `hls.js` config, you can see all config [here](https://github.com/video-dev/hls.js/blob/master/docs/API.md#fine-tuning)  |
+| autoPlay `Boolean`          | Autoplay when component is ready. Defaults to `false`                                                                    |
+| controls `Boolean`          | Whether or not to show the playback controls. Defaults to `false`                                                        |
+| height `Number`             | Video height. Defaults to `auto`                                                                                         |
+| width `Number`              | Video width. Defaults to `100%`                                                                                          |
+| loop `Boolean`              | Specifies that the video will start over again, every time it is finished. Defaults to `false`                           |
+| muted `Boolean`             | Specifies that the audio output of the video should be muted. Defaults to `false`                                        |
+| poster `String`             | Specifies if and how the author thinks the video should be loaded when the page loads                                    |
+| preload `String`            | Specifies an image to be shown while the video is downloading, or until the user hits the play button. Options: `auto`, `metadata`, `none` |
+| playsInline `Boolean`       | Indicates that the video is to be played "inline", that is within the element's playback area. Defaults to `undefined`   |
+| disablePictureInPicture `Boolean` | Prevents the browser from offering a picture-in-picture context menu or to request picture-in-picture automatically in some cases. Defaults to `undefined` |
+| disableRemotePlayback `Boolean` | Disables the capability of remote playback in devices that are attached using wired (HDMI, DVI, etc.) and wireless technologies (Miracast, Chromecast, DLNA, AirPlay, etc.). Defaults to `undefined` |
+| controlsList `String`       | Determines what controls to show on the media element whenever the browser shows its own set of controls. Defaults to `undefined` |
+| crossOrigin `String`        | This enumerated attribute indicates whether to use CORS to fetch the related video. Options: `anonymous`, `use-credentials`, or `undefined` |
+| mediaGroup `String`         | The name of the group the media element belongs to. Defaults to `undefined`                                              |
+
+## NextJS Example
+To use in NextJS, wrap the ReactHlsPlayer in a client component to ensure client side rendering of the component.
+
+```ts
+'use client'
+import dynamic from 'next/dynamic'
+import { ReactHlsPlayerProps } from 'react-hls-video-player'
+
+const ReactHlsPlayer = dynamic(() => import('react-hls-video-player').then((mod) => mod.default), {
+    ssr: false,
+})
+
+export default function ClientHlsPlayer({
+    src,
+    className,
+    autoPlay = false,
+    controls = true,
+    ...props
+}: ReactHlsPlayerProps) {
+    return (
+        <ReactHlsPlayer
+            src={src}
+            controls={controls}
+            autoPlay={autoPlay}
+            className={`rounded-[12px] w-full max-w-[571px] ${className || ''}`}
+            {...props}
+        />
+    )
+}
+```
 
 ### Additional Notes
 
