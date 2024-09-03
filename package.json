@@ -1,6 +1,6 @@
 {
     "name": "react-hls-video-player",
-    "version": "3.2.2",
+    "version": "3.2.3",
     "description": "A simple and easy to use react component for playing an hls live stream",
     "main": "./dist/index.js",
     "types": "./dist",
