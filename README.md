@@ -182,7 +182,7 @@ export default function ClientHlsPlayer({
             src={src}
             controls={controls}
             autoPlay={autoPlay}
-            className={`rounded-[12px] w-full max-w-[571px] ${className || ''}`}
+            className={className || ''}
             {...props}
         />
     )
