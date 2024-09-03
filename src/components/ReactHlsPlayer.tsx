@@ -1,4 +1,3 @@
-'use client'
 import React, { useEffect, RefObject } from 'react'
 import Hls, { HlsConfig } from 'hls.js'
 
@@ -27,7 +26,7 @@ const ReactHlsPlayer: React.FC<HlsPlayerProps> = ({
 
     useEffect(() => {
         let hls: Hls | null
-        console.log('in player')
+
         function initPlayer() {
             if (hls != null) {
                 hls.destroy()
@@ -38,10 +37,6 @@ const ReactHlsPlayer: React.FC<HlsPlayerProps> = ({
                 ...hlsConfig,
             })
 
-            if (internalRef.current) {
-                newHls.attachMedia(internalRef.current)
-            }
-
             newHls.on(Hls.Events.MEDIA_ATTACHED, () => {
                 newHls.loadSource(src)
             })
@@ -50,11 +45,12 @@ const ReactHlsPlayer: React.FC<HlsPlayerProps> = ({
                 if (!autoPlay) {
                     return
                 }
-                internalRef?.current
-                    ?.play()
-                    .catch(() =>
-                        console.warn('Unable to autoplay prior to user interaction with the dom.'),
-                    )
+
+                try {
+                    internalRef?.current?.play()
+                } catch (error) {
+                    console.warn('Play is not supported in this environment', error)
+                }
             })
 
             newHls.on(Hls.Events.ERROR, (event, data) => {
@@ -74,6 +70,10 @@ const ReactHlsPlayer: React.FC<HlsPlayerProps> = ({
                         break
                 }
             })
+
+            if (internalRef.current) {
+                newHls.attachMedia(internalRef.current)
+            }
 
             hls = newHls
             getHLSInstance?.(newHls)
