@@ -1,9 +1,10 @@
 # React HLS Video Player
 
-![NPM Downloads](https://img.shields.io/npm/dm/react-hls-video-player?style=flat-square)
+![npm downloads](https://img.shields.io/npm/dm/react-hls-video-player.svg)
+![npm version](https://img.shields.io/npm/v/react-hls-video-player.svg)
+![license](https://img.shields.io/npm/l/react-hls-video-player.svg)
 [![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
-![Libraries.io dependency status for latest release](https://img.shields.io/librariesio/release/npm/react-hls-video-player)
-![npm bundle size](https://img.shields.io/bundlephobia/min/react-hls-video-player)
+
 
 ## Introduction
 
