@@ -5,5 +5,5 @@ module.exports = {
     moduleNameMapper: {
         '^hls.js$': '<rootDir>/test/mocks/hls.mock.ts',
     },
-    testMatch: ['<rootDir>/test/**/*.test.tsx'],
+    testMatch: ['<rootDir>/test/**/*.spec.tsx'],
 }
