@@ -1,4 +1,5 @@
 .all-contributorsrc
+.github
 .eslintrc
 .prettierrc
 tsconfig.json

@@ -7,14 +7,14 @@ declare global {
     }
 }
 
-export interface HlsPlayerProps extends React.VideoHTMLAttributes<HTMLVideoElement> {
+export interface ReactHlsPlayerProps extends React.VideoHTMLAttributes<HTMLVideoElement> {
     hlsConfig?: HlsConfig
     playerRef?: RefObject<HTMLVideoElement>
     getHLSInstance?: (hls: Hls) => void
     src: string
 }
 
-const ReactHlsPlayer: React.FC<HlsPlayerProps> = ({
+const ReactHlsPlayer: React.FC<ReactHlsPlayerProps> = ({
     hlsConfig,
     playerRef,
     getHLSInstance,
