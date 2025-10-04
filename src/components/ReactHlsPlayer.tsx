@@ -54,6 +54,8 @@ const ReactHlsPlayer: React.FC<ReactHlsPlayerProps> = ({
             })
 
             newHls.on(Hls.Events.ERROR, (event, data) => {
+                props.onError && props.onError(event, data);
+
                 if (!data.fatal) {
                     return
                 }
